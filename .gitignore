@@ -1,3 +1,9 @@
-/.vscode
-__pycache__
-/venv
+/.idea
+/__pycache__
+checkpoints/*
+driving_video/*
+video/*
+crop.mp4
+final.mp4
+result.mp4
+image.png
