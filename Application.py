@@ -116,5 +116,7 @@ if __name__ == '__main__':
         my_list = yaml.load(file, Loader=yaml.FullLoader)
         print('\n'.join(my_list))
 
-    client.run('NzM4NzY0NDA0MjAzNDU0NDg2.XyQp9w.bmn4B1sl1Y6y0-iBj5X72fZGlbY')
+    with open('key.txt') as k:
+        key = k.readline()
+        client.run(key)
 
