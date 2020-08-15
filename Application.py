@@ -80,18 +80,18 @@ async def on_message(message):
                     print('New Reference Created')
                     await message.channel.send("New reference created, " + new_command)
 
-                    with open('config.yaml', 'r') as file:
+                    with open('list.yaml', 'r') as file:
                         up_list = yaml.load(file, Loader=yaml.FullLoader)
                         up_list.append(new_command)
                         my_list.append(new_command)
                         print(up_list)
 
-                    with open('config.yaml', 'w') as file:
+                    with open('list.yaml', 'w') as file:
                         yaml.dump(up_list, file)
 
         if command == 'help':
             e = {
-                "title": "QuibBot Help",
+                "title": "DeepBot Help",
                 "description": "**See list of available reference videos**\n```.deep list```\n**Create a deepfake video**\nPost an image and then use the following command: \n```.deep <name of reference>```\n**Create a new reference video**\nCreate a new reference from a YouTube video, and crop it using optional timestamp parameters.\n```.deep addreference <name> <YouTube URL> [timestamp1] [timestamp2]```\n",
                 "color": 14071166,
                 "author": "Quibble"
@@ -112,7 +112,7 @@ async def on_message(message):
             await message.channel.send(file=discord.File('final.mp4'))
 
 if __name__ == '__main__':
-    with open('config.yaml', 'r') as file:
+    with open('list.yaml', 'r') as file:
         my_list = yaml.load(file, Loader=yaml.FullLoader)
         print('\n'.join(my_list))
 
