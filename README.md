@@ -2,7 +2,7 @@
 This is a bot for creating deepfake memes on Discord.
 
 ## Installation
-This application supports ``python3``.
+This application supports ``python3``.  
 ```git clone https://github.com/PDorrian/DeepBot --recursive```
 
 ### Requirements
@@ -10,7 +10,7 @@ This application supports ``python3``.
 You will also need to install ffmpeg (and add it to PATH if on Windows).
 
 ### Pre-trained Checkpoint
-Download ``vox-adv-cpk.pth.tar`` from one of the following links: [google-drive](https://drive.google.com/open?id=1PyQJmkdCsAkOYwUyaj_l-l0as-iLDgeH) or [yandex-disk](https://yadi.sk/d/lEw8uRm140L_eQ).  
+Download ``vox-adv-cpk.pth.tar`` from one of the following links: [google-drive](https://drive.google.com/open?id=1PyQJmkdCsAkOYwUyaj_l-l0as-iLDgeH) or [yandex-disk](https://yadi.sk/d/lEw8uRm140L_eQ).
 Place the file within the ``/checkpoints/`` folder.
 
 ### Attach to Bot
