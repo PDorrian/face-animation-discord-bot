@@ -100,7 +100,10 @@ async def on_message(message):
             await message.channel.send(embed=embed)
 
         if command == 'list':
-            await message.channel.send('\n'+'\n'.join(my_list))
+            if my_list != []:
+                await message.channel.send('\n'.join(my_list))
+            else:
+                await message.channel.send("There are currently no references created.")
 
         if command in my_list:
             await message.channel.send("Processing...")
@@ -112,9 +115,13 @@ async def on_message(message):
             await message.channel.send(file=discord.File('final.mp4'))
 
 if __name__ == '__main__':
+    with open('list.yaml', 'a+') as file:
+        file.close()
+
     with open('list.yaml', 'r') as file:
-        my_list = yaml.load(file, Loader=yaml.FullLoader)
-        print('\n'.join(my_list))
+        my_list = yaml.load(file, Loader=yaml.FullLoader) or []
+        if my_list != []:
+            print('\n'.join(my_list))
 
     with open('key.txt') as k:
         key = k.readline()
