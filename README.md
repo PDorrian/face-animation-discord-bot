@@ -2,7 +2,7 @@
 This is a bot for creating deepfake memes on Discord.
 
 ## Installation
-This application supports ``python3``.  
+This application supports ``python3``.
 ```git clone https://github.com/PDorrian/DeepBot --recursive```
 
 ### Requirements
@@ -17,7 +17,7 @@ Place the file within the ``/checkpoints/`` folder.
 Create ``key.txt`` within the main directory and include your Bot Token in this file.
 
 ### Run
-''python Application.py``
+``python Application.py``
 
 ## Using the Bot
 Simply message ``.deep help`` in any Discord channel to see a list of commands.
