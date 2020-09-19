@@ -92,7 +92,7 @@ async def on_message(message):
         if command == 'help':
             e = {
                 "title": "DeepBot Help",
-                "description": "**See list of available reference videos**\n```.deep list```\n**Create a deepfake video**\nPost an image and then use the following command: \n```.deep <name of reference>```\n**Create a new reference video**\nCreate a new reference from a YouTube video, and crop it using optional timestamp parameters.\n```.deep addreference <name> <YouTube URL> [timestamp1] [timestamp2]```\n",
+                "description": "**See list of available reference videos**\n```.deep list```\n**Create a deepfake video**\nPost an image and then use the following command: \n```.deep <name of reference>```\n**Create a new reference video**\nCreate a new reference from a YouTube video, and crop it using optional timestamp parameters.\n```.deep addreference <name> <YouTube URL> [timestamp1] [timestamp2]``` \n**Delete an existing reference video**. \n```.deep deletereference <reference name>```\n",
                 "color": 14071166,
                 "author": "Quibble"
             }
@@ -104,6 +104,28 @@ async def on_message(message):
                 await message.channel.send('\n'.join(my_list))
             else:
                 await message.channel.send("There are currently no references created.")
+
+        if command == 'deletereference':
+            reference = contents[2]
+
+            if reference in my_list:
+                with open('list.yaml', 'r') as file:
+                    up_list = yaml.load(file, Loader=yaml.FullLoader)
+                    up_list.remove(reference)
+                    my_list.remove(reference)
+                    print(up_list)
+
+                with open('list.yaml', 'w') as file:
+                    yaml.dump(up_list, file)
+
+                os.remove('driving_video/' + reference + '.mp4')
+                os.remove('driving_video/' + reference + '_sound.mp3')
+
+                await message.channel.send("Reference deleted, ``" + reference + "``.")
+
+            else:
+                await message.channel.send("No reference found with name ``" + reference + "``.")
+
 
         if command in my_list:
             await message.channel.send("Processing...")
