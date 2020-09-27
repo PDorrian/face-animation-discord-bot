@@ -66,9 +66,24 @@ async def on_message(message):
                     else:
                         os.system('ffmpeg -ss ' + timestamp1 + ' -to ' + timestamp2 + ' -i video/raw.mp4 video/cut.mp4 -y')
                     # Crop for deepfake algorithm
-                    out = os.popen('python crop-video.py --inp video/cut.mp4').read()
-                    os.system(out + ' -y')
-                    print(out)
+                    out = os.popen('python crop-video.py --inp video/cut.mp4')
+                    crops = out.read().split('\n')
+
+                    hi = 0
+                    indx = 0
+                    for i in range(len(crops)):
+                        crop = crops[i].split()
+                        if crop:
+                            if float(crop[6]) > hi:
+                                hi = float(crop[6])
+                                indx = i
+
+                    new_crop = crops[indx].split()[8][6:-1]
+
+                    print('New crop: ' + new_crop)
+
+                    os.system('ffmpeg -i video/cut.mp4 -filter:v "crop='+ new_crop +', scale=256:256" crop.mp4 -y')
+
                     # Create driving video and audio files
                     os.system('ffmpeg -i crop.mp4 -q:a 0 -map a driving_video/' + new_command + '_sound.mp3')
                     os.system('ffmpeg -i crop.mp4 -c copy driving_video/' + new_command + '.mp4 -y')
@@ -117,15 +132,17 @@ async def on_message(message):
 
                 with open('list.yaml', 'w') as file:
                     yaml.dump(up_list, file)
-
-                os.remove('driving_video/' + reference + '.mp4')
-                os.remove('driving_video/' + reference + '_sound.mp3')
+                try:
+                    os.remove('driving_video/' + reference + '.mp4')
+                    os.remove('driving_video/' + reference + '_sound.mp3')
+                except OSError as e:  # name the Exception `e`
+                    print("Failed with:", e.strerror)  # look what it says
+                    print("Error code:", e.code)
 
                 await message.channel.send("Reference deleted, ``" + reference + "``.")
 
             else:
                 await message.channel.send("No reference found with name ``" + reference + "``.")
-
 
         if command in my_list:
             await message.channel.send("Processing...")
