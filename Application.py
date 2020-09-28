@@ -68,41 +68,49 @@ async def on_message(message):
                     # Crop for deepfake algorithm
                     out = os.popen('python crop-video.py --inp video/cut.mp4')
                     crops = out.read().split('\n')
+                    print(crops)
 
-                    hi = 0
-                    indx = 0
-                    for i in range(len(crops)):
-                        crop = crops[i].split()
-                        if crop:
-                            if float(crop[6]) > hi:
-                                hi = float(crop[6])
-                                indx = i
+                    if crops:
+                        hi = 0
+                        indx = 0
 
-                    new_crop = crops[indx].split()[8][6:-1]
+                        for i in range(len(crops)):
+                            crop = crops[i].split()
+                            if crop:
+                                if float(crop[6]) > hi:
+                                    hi = float(crop[6])
+                                    indx = i
+                                    print(hi, indx)
 
-                    print('New crop: ' + new_crop)
+                        new_crop = crops[indx].split()[8][6:-1]
 
-                    os.system('ffmpeg -i video/cut.mp4 -filter:v "crop='+ new_crop +', scale=256:256" crop.mp4 -y')
+                        print('New crop: ' + new_crop)
 
-                    # Create driving video and audio files
-                    os.system('ffmpeg -i crop.mp4 -q:a 0 -map a driving_video/' + new_command + '_sound.mp3')
-                    os.system('ffmpeg -i crop.mp4 -c copy driving_video/' + new_command + '.mp4 -y')
+                        os.system('ffmpeg -i video/cut.mp4 -filter:v "crop='+ new_crop +', scale=256:256" crop.mp4 -y')
+
+                        # Create driving video and audio files
+                        os.system('ffmpeg -i crop.mp4 -q:a 0 -map a driving_video/' + new_command + '_sound.mp3')
+                        os.system('ffmpeg -i crop.mp4 -c copy driving_video/' + new_command + '.mp4 -y')
+
+                        os.remove("crop.mp4")
+
+                        print('New Reference Created')
+                        await message.channel.send("New reference created, " + new_command)
+
+                        with open('list.yaml', 'r') as file:
+                            up_list = yaml.load(file, Loader=yaml.FullLoader)
+                            up_list.append(new_command)
+                            my_list.append(new_command)
+                            print(up_list)
+
+                        with open('list.yaml', 'w') as file:
+                            yaml.dump(up_list, file)
+
+                    else:
+                        await message.channel.send('No faces recognised in clip. The clip may be too short or contain too many cuts.')
 
                     os.remove("video/raw.mp4")
                     os.remove("video/cut.mp4")
-                    os.remove("crop.mp4")
-
-                    print('New Reference Created')
-                    await message.channel.send("New reference created, " + new_command)
-
-                    with open('list.yaml', 'r') as file:
-                        up_list = yaml.load(file, Loader=yaml.FullLoader)
-                        up_list.append(new_command)
-                        my_list.append(new_command)
-                        print(up_list)
-
-                    with open('list.yaml', 'w') as file:
-                        yaml.dump(up_list, file)
 
         if command == 'help':
             e = {
