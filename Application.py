@@ -68,6 +68,7 @@ async def on_message(message):
                     # Crop for deepfake algorithm
                     out = os.popen('python crop-video.py --inp video/cut.mp4')
                     crops = out.read().split('\n')
+                    crops[:] = [x for x in crops if x]
                     print(crops)
 
                     if crops:
