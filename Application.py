@@ -12,11 +12,13 @@ if __name__ == '__main__':
     client = discord.Client()
     bot = commands.Bot(command_prefix='.', description='QuibBot')
     bot.add_cog(Deep(bot))
-    bot.run(key, bot=True, reconnect=True)
 
     @bot.event
     async def on_message(message):
-        if message.attachments and not message.author.bot:
+        if message.author.bot:
+            return
+
+        if message.attachments:
             attachment = message.attachments[0]
             print("Attachment received: " + attachment.url)
             # Save attachment
@@ -28,6 +30,8 @@ if __name__ == '__main__':
                         await f.close()
 
         await bot.process_commands(message)
+
+    bot.run(key, bot=True, reconnect=True)
 
 
 
