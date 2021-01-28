@@ -5,7 +5,7 @@ It provides a convenient I/O interface for the PULSE image processing library. U
 This repository contains code from [First Order Motion Model for Image Animation](https://github.com/AliaksandrSiarohin/first-order-model) by Aliaksandr Siarohin, Stéphane Lathuilière, Sergey Tulyakov, Elisa Ricci and Nicu Sebe.<br>
 
 ## Demo
-![Visual Demonstration](https://i.imgur.com/fF7vvm7.gif)
+![Visual Demonstration](https://github.com/PDorrian/face-animation-discord-bot/blob/master/demo.gif)
 
 ## Installation
 This application supports ``python3``.<br>
