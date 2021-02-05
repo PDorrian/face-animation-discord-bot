@@ -1,13 +1,17 @@
 # Face Animation Bot for Discord
 This is a bot for creating "deepfake" memes on Discord.<br>
-It provides a convenient I/O interface for the PULSE image processing library. Users can easily create new references from YouTube links as well as animate images.<br>
+It provides a convenient I/O interface for the First Order Motion Model library. Users can easily create new references from YouTube links as well as animate images.<br>
 <br>
 This repository contains code from [First Order Motion Model for Image Animation](https://github.com/AliaksandrSiarohin/first-order-model) by Aliaksandr Siarohin, Stéphane Lathuilière, Sergey Tulyakov, Elisa Ricci and Nicu Sebe.<br>
+
+---
 
 ## Demo
 ![Visual Demonstration](https://github.com/PDorrian/face-animation-discord-bot/blob/master/demo.gif)
 
-## Installation
+---
+
+## How to Install
 This application supports ``python3``.<br>
 ```git clone https://github.com/PDorrian/face-animation-discord-bot.git --recursive```
 
@@ -25,5 +29,19 @@ Create ``key.txt`` within the main directory and include your Bot Token in this 
 ### Run
 ``python Application.py``
 
-## Using the Bot
+---
+
+## How to Use
 Simply message ``.deep help`` in any Discord channel to see a list of commands.
+
+> #### See list of available reference videos
+> ```.deep list```
+>
+> #### Create a deepfake video
+> Post an image and then use the following command: .deep <reference name>
+>
+> #### Create a new reference video
+> Create a new reference from a YouTube video, and crop it using optional timestamp parameters. .deep create <reference name> <YouTube URL> [timestamp1] [timestamp2]
+
+> #### Delete an existing reference video.
+> .deep delete <reference name>
