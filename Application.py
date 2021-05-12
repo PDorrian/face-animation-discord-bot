@@ -3,7 +3,7 @@ from discord.ext import commands
 import aiohttp
 import aiofiles
 
-from Deep import Deep
+from cogs.deep.Deep import Deep
 
 if __name__ == '__main__':
     with open('key.txt') as k:
